@@ -1,0 +1,18 @@
+<mat-table #table [dataSource]="dataSource">
+  <ng-container *ngFor="let col of columns" matColumnDef="{{col.name}}">
+      <mat-header-cell *matHeaderCellDef>{{ col.header }}</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a *ngIf="col.link; else nolink" routerLink="{{row.link}}" >
+          {{row[col.name]}}
+        </a>
+
+        <ng-template #nolink>
+        {{row[col.name]}}
+        </ng-template>
+
+      </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="tableCols"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: tableCols;"></mat-row>
+</mat-table>

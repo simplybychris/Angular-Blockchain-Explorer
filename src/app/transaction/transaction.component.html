@@ -1,0 +1,9 @@
+<div class="container py-4 main-content">
+  <h2 class="fw-bold">Transaction {{transaction?.id}}</h2>
+
+
+  <app-transactions-list *ngIf="transaction" [data]="[transaction!]"></app-transactions-list>
+
+    <h2 class="fw-bold">Details</h2>
+    <app-row [data]="rowData"></app-row>
+  </div>

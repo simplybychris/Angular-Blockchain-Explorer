@@ -1,0 +1,56 @@
+.mat-toolbar {
+  background-color: #121D33;
+  color: white;
+  height:10vh;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.title{
+  font-weight: bold;
+  font-size:1.5em;
+  text-decoration: none;
+}
+
+img{
+  margin-right:5px;
+}
+
+.logo{
+  display:flex;
+  width:30px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+a {
+  font-weight: 700;
+  color: #C1C4C9;
+  &:visited {
+    color: #fff;
+  }
+  &:hover {
+    color: #fff;
+  }
+  &:active {
+    color: #fff;
+  }
+}
+
+.search-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  font-size: 0.7em;
+
+  input::placeholder{
+    color: #d0d0d0;
+    font-weight: bolder;
+  }
+}
+
+.search {
+  width: 100%;
+}

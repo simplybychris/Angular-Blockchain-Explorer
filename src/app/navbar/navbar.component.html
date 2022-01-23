@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <a class="title" routerLink="/">
+    <div class="logo">
+      <img src="../assets/img/logo.svg" alt="logo">
+      <span>Studchain</span>
+    </div>
+  </a>
+  <div class="spacer"></div>
+  <form class="search-form">
+    <mat-form-field class="search" appearance="fill">
+      <input matInput placeholder="Search blocks, transactions, hash...">
+    </mat-form-field>
+  </form>
+  <a mat-button routerLink="/">Explorer</a>
+  <a mat-button (click)="onWalletClick()">Wallet</a>
+  <a mat-button (click)="onWalletClick()">Peersnpm</a>
+  <a mat-button routerLink="transfer" >Send Transaction</a>
+</mat-toolbar>

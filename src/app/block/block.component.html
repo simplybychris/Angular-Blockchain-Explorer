@@ -1,0 +1,19 @@
+<div class="container py-4 main-content">
+  <div class="txs-container">
+    <h2 class="fw-bold">Block {{ block.index }}</h2>
+
+    <p>This block was mined on {{ time }}. </p>
+    <p>The miner(s) of this block earned a total reward of 50 STUD. The Block rewards, also known as the Coinbase
+      reward, were sent to this <a routerLink="/address/{{miner}}">address</a>.</p>
+
+    <p>A total of {{rewardAmount}} STUD were sent in the block.</p>
+  </div>
+
+  <app-row [data]="rowData"></app-row>
+
+  <h2 class="fw-bold my-5">Block Transactions</h2>
+  <app-transactions-list [data]="block.data!"></app-transactions-list>
+
+
+</div>
+

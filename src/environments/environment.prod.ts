@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: "http://localhost:3002",
+  confirmation_amount: 3,
+  coinbase_address: "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 };

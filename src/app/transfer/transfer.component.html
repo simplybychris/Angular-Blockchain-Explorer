@@ -1,0 +1,29 @@
+<div class="container py-4 main-content">
+  <div class="transfer-container">
+    <h2 class="fw-bold my-5">Transfer Info</h2>
+    <form class="example-form" [formGroup]="transferForm">
+      <mat-form-field class="example-full-width">
+        <mat-label>Sender address :</mat-label>
+        <input matInput value="{{senderAddress}}" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Recipient address :</mat-label>
+        <input matInput id="recipient" placeholder="address" formControlName="recipient" required>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Amount :</mat-label>
+        <input matInput type="number" id="amount" placeholder="f.e. 1000" formControlName="amount" required>
+      </mat-form-field>
+      <button type="submit" [disabled]="transferForm.invalid" (click)="onFormSubmit(transferForm.value)" mat-flat-button
+              color="primary">Send
+      </button>
+    </form>
+    <button (click)="mine()" mat-flat-button style="margin-top: 2em;" color="primary">Mine</button>
+
+    <span *ngIf="errors" style="color: red;">{{errors}}</span>
+
+    <app-transactions-list [data]="txs"></app-transactions-list>
+  </div>
+</div>

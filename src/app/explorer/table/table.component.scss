@@ -1,0 +1,91 @@
+.example-container {
+  background: #121D33;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+span, h4, b, a {
+  font-color: white;
+}
+
+mat-header-cell {
+  background: #121D33;
+  font-weight: bolder;
+  color: white;
+  min-height: 64px;
+}
+
+mat-cell{
+  background: #121D33;
+  font-weight: 600;
+  //color: #555555;
+  color: white;
+  & * {
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    padding-right:10px;
+  }
+}
+
+.mat-form-field {
+  background: #121D33;
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.mat-row{
+  border-bottom-width: 0;
+}
+
+.mat-header-row{
+  border-bottom: solid 2px #091429;
+}
+
+a{
+  &:link {
+    text-decoration: none;
+  }
+
+  &:visited { text-decoration: none; }
+
+  &:hover { text-decoration: underline; }
+
+  &:active { text-decoration: none; }
+}
+
+
+@mixin mat-table-columns($columns)
+{
+  .mat-column-
+  {
+    @each $colName, $props in $columns {
+
+      $width: map-get($props, 'width');
+
+      &#{$colName}
+      {
+        flex: $width;
+        min-width: $width;
+
+        @if map-has-key($props, 'color')
+        {
+          color: map-get($props, 'color');
+        }
+      }
+    }
+  }
+}
+
+@include mat-table-columns((
+  id: (width: 60%),
+  timestamp: (width: 25%),
+  amount: (width: 15%),
+  hash: (width: 15%)
+));

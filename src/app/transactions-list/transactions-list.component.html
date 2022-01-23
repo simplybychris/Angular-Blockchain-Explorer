@@ -1,0 +1,26 @@
+<div class="txs-container" *ngFor="let tx of data">
+  <div class="row d-flex justify-content-between">
+    <div class="col-6">Hash:<b style="color:deepskyblue;"><a routerLink="/transaction/{{tx.id}}">{{tx.id}}</a></b></div>
+    <div *ngIf="tx.confirmations" class="col-6" style="text-align: right;"><button type="button" style="pointer-events: none;" class="btn" [ngClass]="(tx.confirmations!! > confirmationsNumber) ? 'btn-success' : 'btn-danger'">{{ tx.confirmations!! > confirmationsNumber ? 'Confirmed' : 'Unconfirmed' }}</button></div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="txs-content">
+        <div class="vins">
+          <span class="address nowrap"><a routerLink="/address/{{tx.txInput?.address}}">{{tx.txInput?.address}}</a></span>
+          <span class="amount">{{ tx.txInput?.amount }} STUD</span>
+        </div>
+      </div>
+    </div>
+    <div class="v-space col-2"><img alt="arrow" src="../assets/img/arrow.png" class="w-25"></div>
+    <div class="col-5">
+      <div class="txs-content" *ngFor="let output of tx.txOutputs">
+        <div class="vins">
+          <span class="address nowrap"><a routerLink="/address/{{output.address}}">
+            {{output.address}}</a></span>
+          <span class="amount">{{output.amount}} STUD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

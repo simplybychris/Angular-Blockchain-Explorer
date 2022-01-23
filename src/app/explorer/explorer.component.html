@@ -1,0 +1,14 @@
+<div class="fluid-container main-content">
+  <div class="row">
+    <div class="col-md-6 blocks-table">
+      <h4><b>Latest Blocks</b></h4>
+      <p>The most recently mined blocks</p>
+      <app-table [dataset]="blocks.slice(-7).reverse()" [columns]="blockCols"></app-table>
+    </div>
+    <div class="col-md-6">
+      <h4><b>Latest Transactions</b></h4>
+      <p>The most recently published unconfirmed transactions</p>
+      <app-table [dataset]="txs.slice(-7).reverse()" [columns]="txCols" class="col-md-6"></app-table>
+    </div>
+  </div>
+</div>
