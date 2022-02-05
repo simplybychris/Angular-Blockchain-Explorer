@@ -16,7 +16,5 @@ export class TransactionsListComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.data = changes.data.currentValue;
-    console.log(this.data);
-
   }
 }

@@ -10,18 +10,18 @@ import {ExplorerComponent} from './explorer/explorer.component';
 import {TableComponent} from "./explorer/table/table.component";
 import {DataService} from "./service/data.service";
 import {HttpClientModule} from "@angular/common/http";
-import { BlockComponent } from './block/block.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import { AddressComponent } from './address/address.component';
-import { RowComponent } from './row/row.component';
-import { TransactionsListComponent } from './transactions-list/transactions-list.component';
+import {BlockComponent} from './block/block.component';
+import {TransactionComponent} from './transaction/transaction.component';
+import {AddressComponent} from './address/address.component';
+import {RowComponent} from './row/row.component';
+import {TransactionsListComponent} from './transactions-list/transactions-list.component';
 import {QRCodeModule} from "angular2-qrcode";
 import {APP_BASE_HREF} from "@angular/common";
-import { TransferComponent } from './transfer/transfer.component';
+import {TransferComponent} from './transfer/transfer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import Swal from 'sweetalert2';
-import { NotFoundComponent } from './not-found/not-found.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {initData} from "./service/app.initializer";
 
 @NgModule({
   declarations: [
@@ -48,7 +48,10 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
     QRCodeModule,
     NgxChartsModule
   ],
-  providers: [DataService, {provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [
+    initData,
+    DataService,
+    {provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

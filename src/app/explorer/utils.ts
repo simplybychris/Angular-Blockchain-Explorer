@@ -1,10 +1,11 @@
 import {Transaction} from "../service/interface/transaction";
 import {Block} from "../service/interface/block";
 import {environment} from "../../environments/environment";
+import {SharedService} from "../service/shared.service";
 
 export default class Utils {
 
-  public static CONFIRMATION_AMOUNT:number = environment.confirmation_amount;
+  public static CONFIRMATION_AMOUNT: number = environment.confirmation_amount;
   public static COINBASE_ADDRESS: string = environment.coinbase_address;
 
   static timeDiffCalc(dateFuture: number, dateNow: number) {
@@ -67,10 +68,14 @@ export default class Utils {
   }
 
   static isAddress(address: string) {
-    if(!/^[0-9a-f]{130}$/i.test(address)){
-      return false;
-    }
     return (/^[0-9a-f]{130}$/.test(address) || /^[0-9A-F]{130}$/.test(address));
   };
 
+  static isBlockAddress(blockAddress: string) {
+    return /^[0]{4}[a-fA-F0-9]{60}$/i.test(blockAddress);
+  }
+
+  static isTransaction(txId: string) {
+    return (/^[0-9a-f]{64}$/i.test(txId));
+  }
 }

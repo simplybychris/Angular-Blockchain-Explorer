@@ -1,4 +1,4 @@
-.transfer-container {
+.transfer-container, .mine-container {
   margin: 1.5em 2em;
 }
 
@@ -19,4 +19,10 @@
 
 input {
   color: white;
+}
+
+mat-progress-bar {
+  display: inline-block;
+  width: 10em;
+  margin-left: 1em;
 }

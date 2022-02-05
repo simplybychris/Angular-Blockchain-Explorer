@@ -20,10 +20,16 @@
               color="primary">Send
       </button>
     </form>
-    <button (click)="mine()" mat-flat-button style="margin-top: 2em;" color="primary">Mine</button>
-
-    <span *ngIf="errors" style="color: red;">{{errors}}</span>
-
     <app-transactions-list [data]="txs"></app-transactions-list>
+  </div>
+
+  <div class="mine-container">
+    <h2 class="fw-bold my-5">Mine Block</h2>
+    <p>Click the "Mine" button to start mining process of the block.</p>
+    <button (click)="mine()" [disabled]="isBlockMined" mat-flat-button style="margin-top: 2em;" color="primary">Mine</button>
+    <ng-container *ngIf="isBlockMined">
+      <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+    </ng-container>
+    <span *ngIf="errors" style="color: red;">{{errors}}</span>
   </div>
 </div>

@@ -5,6 +5,8 @@ import {Transfer} from "../service/interface/transfer";
 import {Router} from "@angular/router";
 import {Transaction} from "../service/interface/transaction";
 import Swal from 'sweetalert2';
+import {finalize} from "rxjs/operators";
+import {SharedService} from "../service/shared.service";
 
 @Component({
   selector: 'app-transfer',
@@ -16,32 +18,37 @@ export class TransferComponent implements OnInit {
   senderAddress: string = "";
   errors: any;
   txs: Transaction[] = [];
+  isBlockMined: boolean = false;
 
-  constructor(private service: DataService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private service: DataService, private sharedService: SharedService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.senderAddress = this.service.userPubKey;
+    this.service.getPubKey().subscribe((res) => {
+      this.senderAddress = res.publicKey;
+    })
 
     this.transferForm = this.formBuilder.group({
-      recipient: [null, [Validators.required]],
+      recipient: [null, [Validators.required, Validators.pattern('^[A-Fa-f0-9]{130}$')]],
       amount: [null, [Validators.required, Validators.min(1)]],
     });
   }
 
   onFormSubmit(value: any) {
-    console.log(value);
     const transferData: Transfer = value;
     this.service.transfer(transferData.recipient, transferData.amount).subscribe(result => {
         this.txs = result;
       },
-      error => {
-        this.errors = 'Error while sending transaction. Check your info and try again.'
+      () => {
+        Swal.fire('Transaction Error', 'Error while sending transaction. Check your data/balance and try again.', 'error');
       })
   }
 
   mine() {
-    this.service.mineBlock().subscribe(() => {
+    this.isBlockMined = true;
+    this.service.mineBlock().pipe(finalize(() => this.isBlockMined = false)).subscribe(value => {
+      this.sharedService.setBlockchain(value)
+      this.txs = [];
       Swal.fire('New block mined successfully!');
     }, () => {
       Swal.fire('Error while mining new block.');

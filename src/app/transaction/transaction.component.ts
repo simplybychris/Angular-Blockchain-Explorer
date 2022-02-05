@@ -29,31 +29,28 @@ export class TransactionComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.paramId = params['id'];
-        console.log("id: ", this.paramId);
+
+        this.service.getAllTransactions().subscribe((res) => {
+          this.transaction = res.find((tx: Transaction) => tx.id == this.paramId);
+          if (this.transaction === undefined) {
+            this.router.navigateByUrl('/');
+          }
+
+          this.service.getBlockchain().subscribe(bc => {
+            this.block = bc.find((block: Block) => block.data?.find((tx: Transaction) => tx.id === this.transaction?.id));
+            if (this.block) {
+              this.service.getBlockConfirmations(this.block?.index!!).subscribe((confirmations) => {
+                this.confirmations = confirmations;
+                this.transaction!!.confirmations = confirmations;
+                this.mapTransactionToRowData();
+              })
+            } else {
+              this.mapTransactionToRowData();
+            }
+          })
+        });
       }
     );
-
-    this.service.getAllTransactions().subscribe((res) => {
-      this.transaction = res.find((tx: Transaction) => tx.id == this.paramId);
-      if(this.transaction === undefined){
-        this.router.navigateByUrl('/');
-      }
-      // console.log("tx: ", this.transaction);
-
-      this.service.getBlockchain().subscribe((bc) => {
-        this.block = bc.find((block: Block) => block.data?.find((tx: Transaction) => tx.id === this.transaction?.id));
-        // console.log("block: ", this.block);
-        if (this.block) {
-          this.service.getBlockConfirmations(this.block?.index!!).subscribe((confirmations) => {
-            this.confirmations = confirmations;
-            this.transaction!!.confirmations = confirmations;
-            this.mapTransactionToRowData();
-          })
-        } else {
-          this.mapTransactionToRowData();
-        }
-      })
-    });
   }
 
   mapTransactionToRowData() {

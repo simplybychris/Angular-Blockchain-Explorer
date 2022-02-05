@@ -4,10 +4,10 @@
     <p>This address has transacted {{addressTxs.length}} times on the Studcoin Blockchain. It has received a total of
       {{totalReceived}} STUD and has sent a total of {{totalSent}} STUD. Current value of addrees: {{balance}} STUD.</p>
     <div class="row py-2">
-      <div class="col-4 qr-code" #qr>
+      <div class="col-sm-4 qr-code" #qr>
         <qr-code [value]="paramId" [size]="220"></qr-code>
       </div>
-      <div class="col-8">
+      <div class="col-sm-8">
         <app-row [data]="rowData"></app-row>
       </div>
     </div>
@@ -15,8 +15,8 @@
       <ngx-charts-pie-chart
         [results]="saleData"
         [legend]="true"
-        [legendTitle]="'Received/Spent Report'"
-        [view]="[1000,300]"
+        [legendTitle]="'Received/Spent'"
+        [view]="[750,250]"
         [labels]="true">
       </ngx-charts-pie-chart>
     </div>

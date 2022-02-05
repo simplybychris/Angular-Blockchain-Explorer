@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Column} from "./table/column";
 import {DataService} from "../service/data.service";
 import Utils from "./utils";
+import {SharedService} from "../service/shared.service";
 
 @Component({
   selector: 'app-explorer',
@@ -13,45 +14,34 @@ export class ExplorerComponent implements OnInit {
   blocks: any[] = [];
   txs: any[] = [];
 
-  constructor(private service: DataService) {
+  constructor(private service: DataService, private sharedService: SharedService) {
     this.service.getBlockchain()
       .subscribe((res) => {
         [...res].forEach(r => {
           const diff = Utils.timeDiffCalc(Date.now(), r.timestamp);
           r.timestamp = diff+' ago';
-
-          // r.miner = [r.data[r.data.length - 1]].find((tx:Transaction) => {
-          //   tx.txOutputs.forEach(txOut => {
-          //     return txOut.address === "0000000000000000000000000000000000000000000000000000000000000000";
-          //   })
-          // }).map((tx:Transaction) => {
-          //   return tx?.txOutputs[0]?.address;
-          // })
         })
-        this.blocks = [...res]
-        console.log("blocks: ", this.blocks);
+        this.blocks = res;
+        this.sharedService.setBlockchain(res);
       });
 
     this.service.getAllTransactions()
       .subscribe((res) => {
-        // console.log("txs:", res);
-        // const data = res;
-        [...res].sort((a, b) => a.timestamp - b.timestamp).forEach(r => {
+        [...res].forEach(r => {
           const date = new Date(r.txInput.timestamp);
-          r.txInput.timestamp = date.getHours() + ':' + date.getMinutes();
-          r.txInput
+          r.txInput.formatTimestamp = date.getHours() + ':' + date.getMinutes();
         })
 
         this.txs = [...res].filter(tx =>
           tx.txOutputs.every((out: any) => out.address != Utils.COINBASE_ADDRESS)
         ).map(res => {
           return {
-            id: res.id, timestamp: res.txInput.timestamp, amount: res.txOutputs
+            id: res.id, formatTimestamp: res.txInput.formatTimestamp, timestamp: res.txInput.timestamp, amount: res.txOutputs
               .filter((tx: { address: any; }) => tx.address !== res.txInput.address)
               .map((tx: { amount: any; }) => tx.amount)
               .reduce((a: any, b: any) => a + b)
           }
-        })
+        }).sort((a, b) => a.timestamp - b.timestamp);
       });
   }
 
@@ -66,7 +56,7 @@ export class ExplorerComponent implements OnInit {
 
   txCols: Column[] = [
     {name: 'id', header: 'Id', link: 'transaction/{id}'},
-    {name: 'timestamp', header: 'Time'},
+    {name: 'formatTimestamp', header: 'Time'},
     {name: 'amount', header: 'Amount'},
   ]
 

@@ -45,7 +45,20 @@ a {
   width: 100%;
   font-size: 0.7em;
 
+  input {
+    width: 400px;
+    border: none;
+    border-bottom: 2px solid #bababa;
+    background: transparent;
+  }
+
+  input:focus{
+    border-bottom: 2px solid #ffffff;
+    outline: none;
+  }
+
   input::placeholder{
+    padding: 0 5px;
     color: #d0d0d0;
     font-weight: bolder;
   }

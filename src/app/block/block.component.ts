@@ -30,27 +30,25 @@ export class BlockComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.paramId = params['id'];
+
+        this.service.getBlockchain().subscribe((res) => {
+          this.block = res.find((block:Block) => block.hash === this.paramId);
+
+          if (this.block === undefined) {
+            this.router.navigateByUrl('/');
+          }
+          this.time = Utils.timeConverter(<number>this.block.timestamp);
+          this.miner = Utils.getMinerAddress(this.block);
+          this.rewardAmount = Utils.getBlockTotalMoney(this.block);
+
+          this.service.getBlockConfirmations(this.block?.index!!).subscribe((confirmations) => {
+            this.confirmations = confirmations;
+            this.block.data!!.forEach((tx: Transaction) => tx.confirmations = confirmations);
+            this.mapBlockToRowData();
+          })
+        })
       }
     );
-
-    this.service.getBlockchain().subscribe((res) => {
-      this.block = res.find((block:Block) => block.hash === this.paramId);
-
-      if (this.block === undefined) {
-        this.router.navigateByUrl('/');
-      }
-      this.time = Utils.timeConverter(<number>this.block.timestamp);
-      this.miner = Utils.getMinerAddress(this.block);
-      this.rewardAmount = Utils.getBlockTotalMoney(this.block);
-
-      this.service.getBlockConfirmations(this.block?.index!!).subscribe((confirmations) => {
-        this.confirmations = confirmations;
-        this.block.data!!.forEach((tx: Transaction) => tx.confirmations = confirmations);
-        this.mapBlockToRowData();
-      })
-
-      // console.log(block);
-    })
   }
 
   mapBlockToRowData() {
