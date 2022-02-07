@@ -35,7 +35,7 @@ import {initData} from "./service/app.initializer";
     RowComponent,
     TransactionsListComponent,
     TransferComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +46,7 @@ import {initData} from "./service/app.initializer";
     BrowserAnimationsModule,
     HttpClientModule,
     QRCodeModule,
-    NgxChartsModule
+    NgxChartsModule,
   ],
   providers: [
     initData,
